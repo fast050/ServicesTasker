@@ -35,7 +35,8 @@
         app:layout_constraintBottom_toTopOf="@+id/button_first"
         app:layout_constraintEnd_toStartOf="@+id/btn_stop_service"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_first" />
+        app:layout_constraintTop_toBottomOf="@+id/textview_first"
+        app:layout_constraintVertical_bias="0.229" />
 
     <Button
         android:id="@+id/btn_stop_service"
@@ -45,4 +46,33 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_start_service"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_start_service" />
+
+    <Button
+        android:id="@+id/btn_unbind_service"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:text="unbind service"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_bind_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_bind_service" />
+
+    <Button
+        android:id="@+id/btn_bind_service"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:text="bind Service"
+        app:layout_constraintEnd_toStartOf="@+id/btn_unbind_service"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_start_service" />
+
+    <Button
+        android:id="@+id/btn_get_random_number"
+        android:layout_width="409dp"
+        android:layout_height="56dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_unbind_service" />
 </androidx.constraintlayout.widget.ConstraintLayout>
