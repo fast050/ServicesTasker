@@ -7,8 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.servicestasker.databinding.FragmentFirstBinding
-import com.example.servicestasker.service.MyService
+import com.example.servicestasker.worker.Worker1
+import com.example.servicestasker.worker.Worker2
+import com.example.servicestasker.worker.Worker3
+import java.util.concurrent.TimeUnit
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -20,6 +26,8 @@ class FirstFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    lateinit var workManager: WorkManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +42,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        workManager= WorkManager.getInstance(requireContext())
 
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -42,14 +51,20 @@ class FirstFragment : Fragment() {
 
         binding.apply {
 
-            val intent = Intent(requireContext(),MyService::class.java)
+
 
             btnStartService.setOnClickListener{
-              activity?.startService(intent)
+                val workRequest1 = OneTimeWorkRequestBuilder<Worker1>()
+                    .addTag(TAG_WORKER1).build()
+                val workRequest2 = OneTimeWorkRequestBuilder<Worker2>()
+                    .addTag(TAG_WORKER2).build()
+                val workRequest3= OneTimeWorkRequestBuilder<Worker3>()
+                    .addTag(TAG_WORKER3).build()
+                workManager.beginWith(arrayListOf(workRequest1,workRequest2)).then(workRequest3).enqueue()
             }
 
             btnStopService.setOnClickListener {
-                activity?.stopService(intent)
+                workManager.cancelAllWorkByTag(TAG_WORKER1)
             }
         }
 
@@ -58,5 +73,12 @@ class FirstFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object{
+        const val TAG_WORKER1= "tagWorker1"
+        const val TAG_WORKER2= "tagWorker2"
+        const val TAG_WORKER3= "tagWorker3"
+
     }
 }

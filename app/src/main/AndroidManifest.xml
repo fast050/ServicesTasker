@@ -23,7 +23,7 @@
 
 
         <service
-            android:name=".service.MyService"
+            android:name=".worker.MyService"
             />
 
     </application>
